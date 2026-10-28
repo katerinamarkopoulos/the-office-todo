@@ -54,6 +54,10 @@ const formatDay = (d: Date) =>
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
+const sideEyeLine = (n: number) =>
+  `${n === 0 ? "No" : n} Task${n === 1 ? "" : "s"} Left. Should we tell Michael?`;
+
+
 function usePersisted<T>(key: string, initial: T) {
   const [val, setVal] = useState<T>(initial);
   const [ready, setReady] = useState(false);
@@ -274,7 +278,7 @@ function Index() {
                 />
                 <div className="flex-1">
                   <p className="text-3xl font-bold">Jims Side-Eye</p>
-                  <p className="text-lg text-muted-foreground">{lastWeek.length} Tasks from yesterday</p>
+                  <p className="text-lg text-muted-foreground">{sideEyeLine(lastWeek.length)}</p>
                 </div>
                 {sideOpen ? <ChevronUp /> : <ChevronDown />}
               </button>
