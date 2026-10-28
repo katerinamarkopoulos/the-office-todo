@@ -7,4 +7,5 @@
 - [x] Header beside "Todays Office": use uploaded Michael face cutout
 - [x] Header right corner: use uploaded The Office logo (white background removed) + favicon from the same mark
 - [x] Notes: type straight into the post-it when adding; round delete icon that appears on hover outside the note's top-right corner
+- [x] Header "Todays Office" is clickable and jumps the date picker back to today
 - [ ] Replace remaining placeholder copy with Katerina's real material (name "Taouba", sample tasks/notes, reminder text)
