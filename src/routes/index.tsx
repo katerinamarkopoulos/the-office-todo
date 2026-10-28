@@ -11,7 +11,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import boss from "@/assets/boss.png";
+import michaelFace from "@/assets/michael-face.png.asset.json";
 import dwight from "@/assets/dwight.png.asset.json";
 import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
@@ -123,7 +123,7 @@ function Index() {
     <div className="min-h-screen bg-background pb-12">
       <header className="flex items-center justify-between bg-secondary px-6 py-3 md:px-40">
         <div className="flex items-center gap-8">
-          <img src={boss} alt="Boss" width={816} height={816} className="h-20 w-20 object-cover object-top" />
+          <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain" />
           <h1 className="text-3xl">Todays Office</h1>
         </div>
         <div className="rounded-xl bg-background p-1.5 shadow">
