@@ -306,9 +306,9 @@ export function Index() {
                   <button
                     aria-label={`Delete note: ${n.text.trim() || "empty note"}`}
                     onClick={() => removeNote(n.id)}
-                    className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
+                    className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
                   >
-                    <Trash2 className="h-3 w-3" />
+                    <Trash2 className="h-2.5 w-2.5" />
                   </button>
                 </div>
               ))}
