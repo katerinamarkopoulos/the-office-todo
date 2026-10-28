@@ -102,7 +102,6 @@ function Index() {
     { id: "n3", text: "Do Michaels Marketing campaign for Dunkin Muffin", color: 2 },
     { id: "n4", text: "Set Dwights stuff in jelly", color: 0 },
   ]);
-  const [name] = useState("Taouba");
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("");
   const [sideOpen, setSideOpen] = useState(false);
