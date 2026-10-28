@@ -6,7 +6,7 @@ This project was built with [Lovable](https://lovable.dev).
 
 ## Live app
 
-[Open the app](https://smarta-tasks-together.lovable.app)
+[Open the app](https://the-office-todo.lovable.app)
 
 ## Build with Lovable
 
