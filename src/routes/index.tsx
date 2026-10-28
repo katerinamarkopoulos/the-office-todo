@@ -264,7 +264,7 @@ function Index() {
               <p className="flex items-center gap-4">
                 <NotebookText className="h-5 w-5" /> Michaels daily wisdom
               </p>
-              <p className="mt-3 text-lg">“{(QUOTES[Math.abs(week) % QUOTES.length] ?? "").split(" – ")[0]}”</p>
+              <p className="mt-3 text-lg">“{WISDOM}”</p>
               <p className="mt-6 text-xs">– Michael Scott</p>
             </div>
 
