@@ -15,6 +15,7 @@ import boss from "@/assets/boss.png";
 import reminder from "@/assets/reminder.png";
 import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
+import michaelYey from "@/assets/michael-yey.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -155,7 +156,13 @@ function Index() {
             <div className="flex-1 space-y-3">
               {todo.length === 0 ? (
                 <div className="flex items-center justify-center gap-3 py-6">
-                  <img src={boss} alt="" width={816} height={816} className="h-20 w-20 object-cover object-top" />
+                  <img
+                    src={michaelYey.url}
+                    alt="Michael Scott pointing finger guns in celebration"
+                    width={500}
+                    height={411}
+                    className="h-20 w-24 shrink-0 object-contain"
+                  />
                   <span className="text-xl">You're all set!</span>
                 </div>
               ) : (
@@ -307,7 +314,19 @@ function TaskRow({
       >
         <Trash2 className="h-4 w-4" />
       </button>
-      <span aria-hidden>{task.done ? "🏆" : "📎"}</span>
+      {task.done ? (
+        <img
+          src={michaelYey.url}
+          alt=""
+          aria-hidden
+          width={500}
+          height={411}
+          loading="lazy"
+          className="h-8 w-10 shrink-0 object-contain"
+        />
+      ) : (
+        <span aria-hidden>📎</span>
+      )}
     </div>
   );
 }
