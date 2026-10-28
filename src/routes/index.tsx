@@ -42,15 +42,7 @@ const NOTE_STYLES = [
   "bg-secondary text-secondary-foreground",
 ];
 
-const QUOTES = [
-  "You miss 100% of the shots you don't take. – Wayne Gretzky",
-  "Sometimes I'll start a sentence and I don't even know where it's going.",
-  "I'm not superstitious, but I am a little stitious.",
-  "Would I rather be feared or loved? Easy. Both.",
-  "I learned a while back that if I do not text 911, people do not return my calls.",
-  "I am Beyoncé, always.",
-  "Fool me once, strike one. Fool me twice, strike three.",
-];
+const WISDOM = "You miss 100% of the shots you don't take.";
 
 function isoWeek(d: Date) {
   const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
@@ -272,7 +264,7 @@ function Index() {
               <p className="flex items-center gap-4">
                 <NotebookText className="h-5 w-5" /> Michaels daily wisdom
               </p>
-              <p className="mt-3 text-lg">“{(QUOTES[Math.abs(week) % QUOTES.length] ?? "").split(" – ")[0]}”</p>
+              <p className="mt-3 text-lg">“{WISDOM}”</p>
               <p className="mt-6 text-xs">– Michael Scott</p>
             </div>
 
