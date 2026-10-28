@@ -77,7 +77,13 @@ describe("Editing a task", () => {
   });
 
   it("saves on blur and keeps the task on its day", () => {
-    seed();
+    localStorage.setItem(
+      "office-tasks",
+      JSON.stringify([
+        { id: "a", text: "Presentation med Micheal", day: today, done: false },
+        { id: "y", text: "Boka konferensrum", day: yesterday, done: false },
+      ]),
+    );
     render(<Index />);
 
     fireEvent.click(editButton());
@@ -85,6 +91,7 @@ describe("Editing a task", () => {
     fireEvent.blur(screen.getByLabelText("Edit task text"));
 
     expect(screen.getByText("Ringa Pam")).toBeInTheDocument();
-    expect(screen.getByText("2 Tasks Left. Should we tell Michael?")).toBeTruthy();
+    expect(screen.getByText("“1 Task Left. Should we tell Michael?”")).toBeTruthy();
   });
+
 });
