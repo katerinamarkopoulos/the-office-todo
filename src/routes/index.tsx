@@ -12,7 +12,7 @@ import {
   X,
 } from "lucide-react";
 import boss from "@/assets/boss.png";
-import reminder from "@/assets/reminder.png";
+import dwight from "@/assets/dwight.png.asset.json";
 import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
 import michaelYey from "@/assets/michael-yey.png.asset.json";
@@ -197,9 +197,22 @@ function Index() {
           <div className="flex flex-col bg-card p-6">
             <h3 className="mb-6 text-center text-3xl">Completed</h3>
             <div className="flex-1 space-y-1">
-              {done.map((t) => (
-                <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} />
-              ))}
+              {done.length === 0 ? (
+                <div className="flex items-center justify-center gap-3 py-6">
+                  <img
+                    src={dwight.url}
+                    alt="Dwight Schrute looking seriously at the camera"
+                    width={494}
+                    height={353}
+                    className="h-20 w-28 shrink-0 object-contain"
+                  />
+                  <span className="text-xl">Less talking. More doing.</span>
+                </div>
+              ) : (
+                done.map((t) => (
+                  <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} />
+                ))
+              )}
             </div>
             <div className="mt-6 flex items-center gap-4 px-6">
               <img src={trophy} alt="Dundie" width={816} height={816} loading="lazy" className="h-14 w-10 object-contain" />
@@ -252,7 +265,7 @@ function Index() {
             </div>
 
             <div className="flex items-center gap-8 border-2 border-border bg-muted p-4">
-              <img src={reminder} alt="" width={816} height={816} loading="lazy" className="h-16 w-16 object-cover object-top" />
+              <img src={dwight.url} alt="Dwight Schrute looking seriously at the camera" width={494} height={353} loading="lazy" className="h-16 w-24 shrink-0 object-contain" />
               <div>
                 <p className="text-2xl">Reminders</p>
                 <p className="text-xl text-muted-foreground">Dont spill the coffee!!!</p>
