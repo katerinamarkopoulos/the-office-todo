@@ -214,7 +214,7 @@ function Index() {
                 <img
                   src={jimSideEye.url}
                   alt="Jim giving a side-eye look at the camera"
-                  width={707}
+                  width={353}
                   height={353}
                   loading="lazy"
                   className="h-20 w-20 shrink-0 object-cover object-top"
