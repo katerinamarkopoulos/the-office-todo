@@ -289,25 +289,27 @@ export function Index() {
             <h3 className="mb-3 text-3xl">Notes</h3>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {notes.map((n) => (
-                <div key={n.id} className={`relative aspect-[6/5] shadow-sm ${NOTE_STYLES[n.color]}`}>
-                  <textarea
-                    data-note={n.id}
-                    value={n.text}
-                    onChange={(e) => editNote(n.id, e.target.value)}
-                    onBlur={() => {
-                      if (!n.text.trim()) removeNote(n.id);
-                    }}
-                    placeholder="Write here…"
-                    aria-label="Note text"
-                    className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-5 pr-8 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
-                  />
-                  <input
-                    type="checkbox"
-                    checked={false}
-                    onChange={() => removeNote(n.id)}
+                <div key={n.id} className="group relative">
+                  <div className={`relative aspect-[6/5] shadow-sm ${NOTE_STYLES[n.color]}`}>
+                    <textarea
+                      data-note={n.id}
+                      value={n.text}
+                      onChange={(e) => editNote(n.id, e.target.value)}
+                      onBlur={() => {
+                        if (!n.text.trim()) removeNote(n.id);
+                      }}
+                      placeholder="Write here…"
+                      aria-label="Note text"
+                      className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-5 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
+                    />
+                  </div>
+                  <button
                     aria-label={`Delete note: ${n.text.trim() || "empty note"}`}
-                    className="absolute right-2 top-2 z-10 h-4 w-4 cursor-pointer accent-primary"
-                  />
+                    onClick={() => removeNote(n.id)}
+                    className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
                 </div>
               ))}
               <button
