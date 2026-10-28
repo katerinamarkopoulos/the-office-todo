@@ -36,18 +36,18 @@ describe("Jims Side-Eye count line", () => {
   it("keeps the s with two tasks left", () => {
     seed(2);
     render(<Index />);
-    expect(screen.getByText("“2 Tasks Left. Should we tell Michael?”")).toBeTruthy();
+    expect(screen.getByText("“2 tasks left from past weeks. Should we tell Michael?”")).toBeTruthy();
   });
 
   it("drops the s with one task left", () => {
     seed(1);
     render(<Index />);
-    expect(screen.getByText("“1 Task Left. Should we tell Michael?”")).toBeTruthy();
+    expect(screen.getByText("“1 task left from past weeks. Should we tell Michael?”")).toBeTruthy();
   });
 
   it("says no tasks with none left", () => {
     seed(0);
     render(<Index />);
-    expect(screen.getByText("“No Tasks Left. Should we tell Michael?”")).toBeTruthy();
+    expect(screen.getByText("“No tasks left from past weeks. Should we tell Michael?”")).toBeTruthy();
   });
 });
