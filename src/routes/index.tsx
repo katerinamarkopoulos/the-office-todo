@@ -143,22 +143,22 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background pb-12">
-      <header className="flex items-center justify-between bg-secondary px-6 py-4">
+      <header className="flex items-center justify-between gap-2 bg-secondary px-4 py-4 md:px-6">
         <button
           onClick={() => setDate(shiftDay(new Date(), 0))}
           aria-label="Todays Office – go to today"
           title="Back to today"
-          className="group flex cursor-pointer items-center gap-8 text-left"
+          className="group flex cursor-pointer items-center gap-3 text-left md:gap-8"
         >
-          <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain transition group-hover:-rotate-3" />
-          <h1 className="border-b-2 border-transparent text-3xl transition group-hover:border-destructive group-hover:text-destructive">Todays Office</h1>
+          <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-14 w-20 shrink-0 object-contain transition group-hover:-rotate-3 md:h-20 md:w-28" />
+          <h1 className="border-b-2 border-transparent text-2xl transition group-hover:border-destructive group-hover:text-destructive md:text-3xl">Todays Office</h1>
         </button>
         <img
           src={officeLogo.url}
           alt="The Office"
           width={654}
           height={420}
-          className="h-16 w-auto shrink-0 object-contain"
+          className="h-12 w-auto shrink-0 object-contain md:h-16"
         />
       </header>
 
