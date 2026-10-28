@@ -55,7 +55,8 @@ const formatDay = (d: Date) =>
 const uid = () => Math.random().toString(36).slice(2, 10);
 
 const sideEyeLine = (n: number) =>
-  `${n === 0 ? "No" : n} Task${n === 1 ? "" : "s"} Left. Should we tell Michael?`;
+  `“${n === 0 ? "No" : n} Task${n === 1 ? "" : "s"} Left. Should we tell Michael?”`;
+
 
 
 function usePersisted<T>(key: string, initial: T) {
