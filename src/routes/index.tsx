@@ -7,8 +7,10 @@ import {
   ChevronRight,
   ChevronUp,
   NotebookText,
+  Pencil,
   Plus,
   Trash2,
+
   X,
 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
@@ -113,6 +115,9 @@ function Index() {
   const toggle = (id: string) =>
     setTasks((ts) => ts.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   const remove = (id: string) => setTasks((ts) => ts.filter((t) => t.id !== id));
+  const edit = (id: string, text: string) =>
+    setTasks((ts) => ts.map((t) => (t.id === id ? { ...t, text } : t)));
+
   const add = () => {
     if (!draft.trim()) return;
     setTasks((ts) => [...ts, { id: uid(), text: draft.trim(), day, done: false }]);
@@ -204,7 +209,10 @@ function Index() {
                   <span className="text-xl">You're all set!</span>
                 </div>
               ) : (
-                todo.map((t) => <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} />)
+                todo.map((t) => (
+                  <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} onEdit={edit} />
+                ))
+
               )}
               {adding && (
                 <div className="flex gap-2">
@@ -247,7 +255,8 @@ function Index() {
                 </div>
               ) : (
                 done.map((t) => (
-                  <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} />
+                  <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} onEdit={edit} />
+
                 ))
               )}
             </div>
@@ -287,7 +296,7 @@ function Index() {
                 <div className="mt-4 space-y-3">
                   {lastWeek.length === 0 && <p className="text-muted-foreground">Nothing left behind. Nice.</p>}
                   {lastWeek.map((t) => (
-                    <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} />
+                    <TaskRow key={t.id} task={t} onToggle={toggle} onRemove={remove} onEdit={edit} />
                   ))}
                 </div>
               )}
@@ -355,12 +364,31 @@ function TaskRow({
   task,
   onToggle,
   onRemove,
+  onEdit,
 }: {
   task: Task;
   onToggle: (id: string) => void;
   onRemove: (id: string) => void;
+  onEdit: (id: string, text: string) => void;
 }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(task.text);
+
+  const start = () => {
+    setDraft(task.text);
+    setEditing(true);
+  };
+  const save = () => {
+    if (draft.trim()) onEdit(task.id, draft.trim());
+    setEditing(false);
+  };
+  const cancel = () => {
+    setDraft(task.text);
+    setEditing(false);
+  };
+
   return (
+
     <div className="group flex items-center gap-3 bg-muted px-2 py-0.5">
       <input
         type="checkbox"
@@ -369,7 +397,29 @@ function TaskRow({
         className="h-4 w-4 accent-primary"
         aria-label={task.text}
       />
-      <span className="flex-1 text-xl">{task.text}</span>
+      {editing ? (
+        <input
+          autoFocus
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") save();
+            if (e.key === "Escape") cancel();
+          }}
+          onBlur={save}
+          aria-label="Edit task text"
+          className="flex-1 border border-input bg-background px-2 py-0.5 text-xl outline-none focus:ring-2 focus:ring-ring"
+        />
+      ) : (
+        <span className="flex-1 text-xl">{task.text}</span>
+      )}
+      <button
+        aria-label={`Edit task: ${task.text}`}
+        onClick={start}
+        className="opacity-0 transition group-hover:opacity-60"
+      >
+        <Pencil className="h-4 w-4" />
+      </button>
       <button
         aria-label="Delete task"
         onClick={() => onRemove(task.id)}
@@ -377,6 +427,7 @@ function TaskRow({
       >
         <Trash2 className="h-4 w-4" />
       </button>
+
       {task.done ? (
         <img
           src={michaelYey.url}
