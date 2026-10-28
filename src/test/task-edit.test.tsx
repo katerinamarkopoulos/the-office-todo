@@ -12,6 +12,12 @@ const today = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).p
   new Date().getDate(),
 ).padStart(2, "0")}`;
 
+const yest = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 1);
+const yesterday = `${yest.getFullYear()}-${String(yest.getMonth() + 1).padStart(2, "0")}-${String(
+  yest.getDate(),
+).padStart(2, "0")}`;
+
+
 const seed = () =>
   localStorage.setItem(
     "office-tasks",
