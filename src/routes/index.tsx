@@ -16,6 +16,7 @@ import reminder from "@/assets/reminder.png";
 import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
 import michaelYey from "@/assets/michael-yey.png.asset.json";
+import dundermifflin from "@/assets/dundermifflin.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -325,7 +326,15 @@ function TaskRow({
           className="h-8 w-10 shrink-0 object-contain"
         />
       ) : (
-        <span aria-hidden>📎</span>
+        <img
+          src={dundermifflin.url}
+          alt=""
+          aria-hidden
+          width={480}
+          height={358}
+          loading="lazy"
+          className="h-7 w-9 shrink-0 object-contain"
+        />
       )}
     </div>
   );
