@@ -91,7 +91,7 @@ describe("Editing a task", () => {
     fireEvent.blur(screen.getByLabelText("Edit task text"));
 
     expect(screen.getByText("Ringa Pam")).toBeInTheDocument();
-    expect(screen.getByText("“1 Task Left. Should we tell Michael?”")).toBeTruthy();
+    expect(screen.getByText("“1 task left from past weeks. Should we tell Michael?”")).toBeTruthy();
   });
 
 });
