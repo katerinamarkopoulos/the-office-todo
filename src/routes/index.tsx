@@ -223,7 +223,7 @@ function Index() {
                     onChange={(e) => setDraft(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && add()}
                     placeholder="New task…"
-                    className="flex-1 border border-input bg-muted px-3 py-1 text-lg outline-none focus:ring-2 focus:ring-ring"
+                    className="min-w-0 flex-1 border border-input bg-muted px-3 py-1 text-lg outline-none focus:ring-2 focus:ring-ring"
                   />
                   <button onClick={() => setAdding(false)} aria-label="Cancel">
                     <X />
@@ -379,7 +379,7 @@ function NoteCard({
       <button
         aria-label={`Delete note: ${note.text.trim() || "empty note"}`}
         onClick={() => onRemove(note.id)}
-        className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
+        className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100 [@media(hover:none)]:opacity-100"
       >
         <Trash2 className="h-2.5 w-2.5" />
       </button>
@@ -416,12 +416,12 @@ function TaskRow({
 
   return (
 
-    <div className="group flex items-center gap-3 bg-muted px-2 py-0.5">
+    <div className="group flex min-w-0 items-center gap-2 overflow-hidden bg-muted px-2 py-0.5 md:gap-3">
       <input
         type="checkbox"
         checked={task.done}
         onChange={() => onToggle(task.id)}
-        className="h-4 w-4 accent-primary"
+        className="h-4 w-4 shrink-0 accent-primary"
         aria-label={task.text}
       />
       {editing ? (
@@ -435,22 +435,22 @@ function TaskRow({
           }}
           onBlur={save}
           aria-label="Edit task text"
-          className="flex-1 border border-input bg-background px-2 py-0.5 text-xl outline-none focus:ring-2 focus:ring-ring"
+          className="min-w-0 flex-1 border border-input bg-background px-2 py-0.5 text-xl outline-none focus:ring-2 focus:ring-ring"
         />
       ) : (
-        <span className="flex-1 text-xl">{task.text}</span>
+        <span className="min-w-0 flex-1 break-words text-xl">{task.text}</span>
       )}
       <button
         aria-label={`Edit task: ${task.text}`}
         onClick={start}
-        className="opacity-0 transition group-hover:opacity-60"
+        className="shrink-0 p-1 opacity-0 transition group-hover:opacity-60 group-focus-within:opacity-60 [@media(hover:none)]:opacity-60"
       >
         <Pencil className="h-4 w-4" />
       </button>
       <button
         aria-label="Delete task"
         onClick={() => onRemove(task.id)}
-        className="opacity-0 transition group-hover:opacity-60"
+        className="shrink-0 p-1 opacity-0 transition group-hover:opacity-60 group-focus-within:opacity-60 [@media(hover:none)]:opacity-60"
       >
         <Trash2 className="h-4 w-4" />
       </button>
