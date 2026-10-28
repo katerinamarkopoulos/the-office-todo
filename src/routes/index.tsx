@@ -136,10 +136,10 @@ function Index() {
           onClick={() => setDate(shiftDay(new Date(), 0))}
           aria-label="Todays Office – go to today"
           title="Back to today"
-          className="group flex items-center gap-8 text-left"
+          className="group flex cursor-pointer items-center gap-8 text-left"
         >
-          <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain" />
-          <h1 className="text-3xl transition group-hover:opacity-80">Todays Office</h1>
+          <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain transition group-hover:-rotate-3" />
+          <h1 className="border-b-2 border-transparent text-3xl transition group-hover:border-destructive group-hover:text-destructive">Todays Office</h1>
         </button>
         <img
           src={officeLogo.url}
