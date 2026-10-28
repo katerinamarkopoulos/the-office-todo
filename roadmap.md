@@ -9,5 +9,7 @@
 - [x] Notes: type straight into the post-it when adding; round delete icon that appears on hover outside the note's top-right corner
 - [x] Header "Todays Office" is clickable and jumps the date picker back to today
 - [x] Jims Side-Eye subtitle: "N Tasks Left. Should we tell Michael?" with singular "Task" at 1
+- [x] Tasks: edit an existing task's text — pencil on hover, Enter saves, Escape cancels
+
 
 - [ ] Replace remaining placeholder copy with Katerina's real material (name "Taouba", sample tasks/notes, reminder text)
