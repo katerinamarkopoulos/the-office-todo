@@ -12,9 +12,9 @@ import {
   X,
 } from "lucide-react";
 import boss from "@/assets/boss.png";
-import sideeye from "@/assets/sideeye.png";
 import reminder from "@/assets/reminder.png";
 import trophy from "@/assets/trophy.png";
+import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -211,7 +211,14 @@ function Index() {
           <div className="space-y-6 pt-12">
             <div className="bg-card p-6">
               <button className="flex w-full items-center gap-6 text-left" onClick={() => setSideOpen((o) => !o)}>
-                <img src={sideeye} alt="" width={816} height={816} loading="lazy" className="h-16 w-16 object-cover object-top" />
+                <img
+                  src={jimSideEye.url}
+                  alt="Jim giving a side-eye look at the camera"
+                  width={707}
+                  height={353}
+                  loading="lazy"
+                  className="h-20 w-20 shrink-0 object-cover object-top"
+                />
                 <div className="flex-1">
                   <p className="text-3xl font-bold">Jims Side-Eye</p>
                   <p className="text-lg text-muted-foreground">{lastWeek.length} Tasks from last week</p>
