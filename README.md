@@ -4,6 +4,10 @@ Skapa denna Todo app
 
 This project was built with [Lovable](https://lovable.dev).
 
+## Preview
+
+[Open the live preview](https://id-preview--09ecf028-2e8b-457a-8ae5-3495300428a3.lovable.app)
+
 ## Build with Lovable
 
 Continue developing this project in the [Lovable editor](https://lovable.dev/projects/09ecf028-2e8b-457a-8ae5-3495300428a3).
