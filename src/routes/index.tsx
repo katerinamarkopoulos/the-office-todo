@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CalendarDays,
   ChevronDown,
@@ -323,34 +323,13 @@ function Index() {
 
           <div>
             <h3 className="mb-3 text-3xl">Notes</h3>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4">
               {notes.map((n) => (
-                <div key={n.id} className="group relative">
-                  <div className={`relative aspect-[6/5] shadow-sm ${NOTE_STYLES[n.color]}`}>
-                    <textarea
-                      data-note={n.id}
-                      value={n.text}
-                      onChange={(e) => editNote(n.id, e.target.value)}
-                      onBlur={() => {
-                        if (!n.text.trim()) removeNote(n.id);
-                      }}
-                      placeholder="Write here…"
-                      aria-label="Note text"
-                      className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-5 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
-                    />
-                  </div>
-                  <button
-                    aria-label={`Delete note: ${n.text.trim() || "empty note"}`}
-                    onClick={() => removeNote(n.id)}
-                    className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
-                  >
-                    <Trash2 className="h-2.5 w-2.5" />
-                  </button>
-                </div>
+                <NoteCard key={n.id} note={n} onEdit={editNote} onRemove={removeNote} />
               ))}
               <button
                 onClick={addNote}
-                className="flex aspect-[6/5] items-center justify-center bg-note-cream text-sm transition hover:brightness-95"
+                className="flex min-h-32 items-center justify-center bg-note-cream text-sm transition hover:brightness-95"
               >
                 + Add New
               </button>
@@ -358,6 +337,53 @@ function Index() {
           </div>
         </section>
       </main>
+    </div>
+  );
+}
+
+function NoteCard({
+  note,
+  onEdit,
+  onRemove,
+}: {
+  note: Note;
+  onEdit: (id: string, text: string) => void;
+  onRemove: (id: string) => void;
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  }, [note.text]);
+
+  return (
+    <div className="group relative">
+      <div className={`relative min-h-32 shadow-sm ${NOTE_STYLES[note.color]}`}>
+        <textarea
+          ref={ref}
+          data-note={note.id}
+          value={note.text}
+          onChange={(e) => onEdit(note.id, e.target.value)}
+          onBlur={() => {
+            if (!note.text.trim()) onRemove(note.id);
+          }}
+          placeholder="Write here…"
+          aria-label="Note text"
+          rows={3}
+          className="block h-full w-full resize-none overflow-hidden break-words bg-transparent p-5 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
+        />
+      </div>
+      <button
+        aria-label={`Delete note: ${note.text.trim() || "empty note"}`}
+        onClick={() => onRemove(note.id)}
+        className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
+      >
+        <Trash2 className="h-2.5 w-2.5" />
+      </button>
     </div>
   );
 }
