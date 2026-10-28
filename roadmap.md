@@ -5,4 +5,5 @@
 - [x] Icon beside incomplete (not done) tasks: use uploaded Dunder Mifflin stapler-in-jello cutout instead of the paperclip
 - [x] Reminder box + Completed empty state ("Less talking. More doing."): use uploaded Dwight cutout
 - [x] Header beside "Todays Office": use uploaded Michael face cutout
+- [x] Header right corner: use uploaded The Office logo (white background removed) + favicon from the same mark
 - [ ] Replace remaining placeholder art/copy with Katerina's real material (name "Taouba", sample tasks/notes, extra quotes)

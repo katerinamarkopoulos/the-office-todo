@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import michaelFace from "@/assets/michael-face.png.asset.json";
+import officeLogo from "@/assets/office-logo.png.asset.json";
 import dwight from "@/assets/dwight.png.asset.json";
 import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
@@ -126,13 +127,13 @@ function Index() {
           <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain" />
           <h1 className="text-3xl">Todays Office</h1>
         </div>
-        <div className="rounded-xl bg-background p-1.5 shadow">
-          <div className="rounded-lg bg-foreground px-2 py-1 text-xs leading-tight text-background">
-            The
-            <br />
-            <span className="text-sm">Office</span>
-          </div>
-        </div>
+        <img
+          src={officeLogo.url}
+          alt="The Office"
+          width={654}
+          height={420}
+          className="h-16 w-auto shrink-0 object-contain"
+        />
       </header>
 
       <main className="mx-auto max-w-6xl px-4">
