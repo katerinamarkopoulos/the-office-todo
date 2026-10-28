@@ -341,6 +341,53 @@ function Index() {
   );
 }
 
+function NoteCard({
+  note,
+  onEdit,
+  onRemove,
+}: {
+  note: Note;
+  onEdit: (id: string, text: string) => void;
+  onRemove: (id: string) => void;
+}) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (el) {
+      el.style.height = "auto";
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  }, [note.text]);
+
+  return (
+    <div className="group relative">
+      <div className={`relative min-h-32 shadow-sm ${NOTE_STYLES[note.color]}`}>
+        <textarea
+          ref={ref}
+          data-note={note.id}
+          value={note.text}
+          onChange={(e) => onEdit(note.id, e.target.value)}
+          onBlur={() => {
+            if (!note.text.trim()) onRemove(note.id);
+          }}
+          placeholder="Write here…"
+          aria-label="Note text"
+          rows={3}
+          className="block h-full w-full resize-none overflow-hidden break-words bg-transparent p-5 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
+        />
+      </div>
+      <button
+        aria-label={`Delete note: ${note.text.trim() || "empty note"}`}
+        onClick={() => onRemove(note.id)}
+        className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
+      >
+        <Trash2 className="h-2.5 w-2.5" />
+      </button>
+    </div>
+  );
+}
+
 function TaskRow({
   task,
   onToggle,
