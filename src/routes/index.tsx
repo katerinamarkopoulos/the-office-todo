@@ -76,7 +76,7 @@ function usePersisted<T>(key: string, initial: T) {
   return [val, setVal] as const;
 }
 
-export function Index() {
+function Index() {
   const current = isoWeek(new Date());
   const [week, setWeek] = useState(current);
   const [tasks, setTasks] = usePersisted<Task[]>("office-tasks", [
