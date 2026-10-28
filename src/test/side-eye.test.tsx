@@ -48,6 +48,6 @@ describe("Jims Side-Eye count line", () => {
   it("says Michael is happy with none left", () => {
     seed(0);
     render(<Index />);
-    expect(screen.getByText("“Michael is happy!”")).toBeTruthy();
+    expect(screen.getByText("“No tasks left from past weeks. Michael is happy!”")).toBeTruthy();
   });
 });
