@@ -99,6 +99,7 @@ function Index() {
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("");
   const [sideOpen, setSideOpen] = useState(false);
+  const [focusNote, setFocusNote] = useState<string | null>(null);
 
   const weekTasks = tasks.filter((t) => t.week === week);
   const todo = weekTasks.filter((t) => !t.done);
@@ -116,9 +117,19 @@ function Index() {
     setAdding(false);
   };
   const addNote = () => {
-    const text = window.prompt("New note");
-    if (text?.trim()) setNotes((n) => [...n, { id: uid(), text: text.trim(), color: n.length % 3 }]);
+    const id = uid();
+    setNotes((ns) => [...ns, { id, text: "", color: ns.length % 3 }]);
+    setFocusNote(id);
   };
+  const editNote = (id: string, text: string) =>
+    setNotes((ns) => ns.map((n) => (n.id === id ? { ...n, text } : n)));
+  const removeNote = (id: string) => setNotes((ns) => ns.filter((n) => n.id !== id));
+
+  useEffect(() => {
+    if (!focusNote) return;
+    document.querySelector<HTMLTextAreaElement>(`textarea[data-note="${focusNote}"]`)?.focus();
+    setFocusNote(null);
+  }, [focusNote]);
 
   return (
     <div className="min-h-screen bg-background pb-12">
