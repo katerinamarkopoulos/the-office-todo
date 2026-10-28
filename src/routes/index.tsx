@@ -164,7 +164,7 @@ function Index() {
 
       <main className="px-4 md:px-6">
         <div className="relative flex flex-col items-start gap-3 pt-4 md:flex-row md:items-center">
-          <h2 className="text-3xl">Hello {name}!</h2>
+          <h2 className="text-xl md:text-2xl">Hey you! Ready to pretend we have our lives together?</h2>
           <div className="flex items-center gap-6 bg-secondary px-3 py-3 md:mx-auto">
             <button aria-label="Previous day" onClick={() => setDate((d) => shiftDay(d, -1))}>
               <ChevronLeft />
