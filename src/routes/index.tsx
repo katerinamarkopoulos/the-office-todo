@@ -57,7 +57,7 @@ const formatDay = (d: Date) =>
 const uid = () => Math.random().toString(36).slice(2, 10);
 
 const sideEyeLine = (n: number) =>
-  `“${n === 0 ? "No" : n} Task${n === 1 ? "" : "s"} Left. Should we tell Michael?”`;
+  `“${n === 0 ? "No" : n} task${n === 1 ? "" : "s"} left from past weeks. Should we tell Michael?”`;
 
 
 
