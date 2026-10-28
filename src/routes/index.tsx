@@ -121,7 +121,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background pb-12">
-      <header className="flex items-center justify-between bg-secondary px-6 py-3 md:px-40">
+      <header className="flex items-center justify-between bg-secondary px-6 py-4 md:px-40">
         <div className="flex items-center gap-8">
           <img src={michaelFace.url} alt="Michael Scott with a surprised look" width={500} height={353} className="h-20 w-28 shrink-0 object-contain" />
           <h1 className="text-3xl">Todays Office</h1>
