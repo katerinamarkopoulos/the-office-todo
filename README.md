@@ -4,9 +4,9 @@ Skapa denna Todo app
 
 This project was built with [Lovable](https://lovable.dev).
 
-## Preview
+## Live app
 
-[Open the live preview](https://id-preview--09ecf028-2e8b-457a-8ae5-3495300428a3.lovable.app)
+[Open the app](https://smarta-tasks-together.lovable.app)
 
 ## Build with Lovable
 
