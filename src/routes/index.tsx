@@ -99,6 +99,7 @@ function Index() {
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("");
   const [sideOpen, setSideOpen] = useState(false);
+  const [focusNote, setFocusNote] = useState<string | null>(null);
 
   const weekTasks = tasks.filter((t) => t.week === week);
   const todo = weekTasks.filter((t) => !t.done);
@@ -116,9 +117,19 @@ function Index() {
     setAdding(false);
   };
   const addNote = () => {
-    const text = window.prompt("New note");
-    if (text?.trim()) setNotes((n) => [...n, { id: uid(), text: text.trim(), color: n.length % 3 }]);
+    const id = uid();
+    setNotes((ns) => [...ns, { id, text: "", color: ns.length % 3 }]);
+    setFocusNote(id);
   };
+  const editNote = (id: string, text: string) =>
+    setNotes((ns) => ns.map((n) => (n.id === id ? { ...n, text } : n)));
+  const removeNote = (id: string) => setNotes((ns) => ns.filter((n) => n.id !== id));
+
+  useEffect(() => {
+    if (!focusNote) return;
+    document.querySelector<HTMLTextAreaElement>(`textarea[data-note="${focusNote}"]`)?.focus();
+    setFocusNote(null);
+  }, [focusNote]);
 
   return (
     <div className="min-h-screen bg-background pb-12">
@@ -278,14 +289,26 @@ function Index() {
             <h3 className="mb-3 text-3xl">Notes</h3>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {notes.map((n) => (
-                <div key={n.id} className={`group relative aspect-[6/5] p-5 text-sm shadow-sm ${NOTE_STYLES[n.color]}`}>
-                  {n.text}
+                <div key={n.id} className="group relative">
+                  <div className={`relative aspect-[6/5] shadow-sm ${NOTE_STYLES[n.color]}`}>
+                    <textarea
+                      data-note={n.id}
+                      value={n.text}
+                      onChange={(e) => editNote(n.id, e.target.value)}
+                      onBlur={() => {
+                        if (!n.text.trim()) removeNote(n.id);
+                      }}
+                      placeholder="Write here…"
+                      aria-label="Note text"
+                      className="absolute inset-0 h-full w-full resize-none overflow-auto bg-transparent p-5 font-typewriter text-sm text-inherit outline-none placeholder:opacity-50"
+                    />
+                  </div>
                   <button
-                    aria-label="Delete note"
-                    onClick={() => setNotes((ns) => ns.filter((x) => x.id !== n.id))}
-                    className="absolute bottom-2 right-2 opacity-0 transition group-hover:opacity-70"
+                    aria-label={`Delete note: ${n.text.trim() || "empty note"}`}
+                    onClick={() => removeNote(n.id)}
+                    className="absolute -right-4 -top-4 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-primary-foreground opacity-0 shadow-sm transition group-hover:opacity-100 group-focus-within:opacity-100"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-2.5 w-2.5" />
                   </button>
                 </div>
               ))}
