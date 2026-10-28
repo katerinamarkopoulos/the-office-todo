@@ -52,14 +52,6 @@ const shiftDay = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(),
 const formatDay = (d: Date) =>
   `${d.toLocaleDateString("en-GB", { weekday: "long" })}, ${d.getDate()} ${d.toLocaleDateString("en-GB", { month: "short" })}`;
 
-function isoWeek(d: Date) {
-  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const day = t.getUTCDay() || 7;
-  t.setUTCDate(t.getUTCDate() + 4 - day);
-  const y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
-  return Math.ceil(((t.getTime() - y.getTime()) / 86400000 + 1) / 7);
-}
-
 const uid = () => Math.random().toString(36).slice(2, 10);
 
 function usePersisted<T>(key: string, initial: T) {
