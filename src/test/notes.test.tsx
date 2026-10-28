@@ -38,11 +38,11 @@ describe("Notes", () => {
     expect(postIts()).toHaveLength(4);
   });
 
-  it("deletes the note whose remove checkbox is ticked", () => {
+  it("deletes the note whose round remove icon is clicked", () => {
     render(<Index />);
 
     fireEvent.click(
-      screen.getByRole("checkbox", { name: "Delete note: Remember to buy Milk for Coffe" }),
+      screen.getByRole("button", { name: "Delete note: Remember to buy Milk for Coffe" }),
     );
 
     expect(postIts()).toHaveLength(3);
