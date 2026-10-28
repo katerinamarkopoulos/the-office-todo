@@ -11,6 +11,8 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import michaelFace from "@/assets/michael-face.png.asset.json";
 import officeLogo from "@/assets/office-logo.png.asset.json";
 import dwight from "@/assets/dwight.png.asset.json";
@@ -33,7 +35,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Task = { id: string; text: string; week: number; done: boolean };
+type Task = { id: string; text: string; day?: string; week?: number; done: boolean };
 type Note = { id: string; text: string; color: number };
 
 const NOTE_STYLES = [
@@ -44,13 +46,11 @@ const NOTE_STYLES = [
 
 const WISDOM = "You miss 100% of the shots you don't take.";
 
-function isoWeek(d: Date) {
-  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  const day = t.getUTCDay() || 7;
-  t.setUTCDate(t.getUTCDate() + 4 - day);
-  const y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
-  return Math.ceil(((t.getTime() - y.getTime()) / 86400000 + 1) / 7);
-}
+const dayKey = (d: Date) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const shiftDay = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const formatDay = (d: Date) =>
+  `${d.toLocaleDateString("en-GB", { weekday: "long" })}, ${d.getDate()} ${d.toLocaleDateString("en-GB", { month: "short" })}`;
 
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -69,17 +69,23 @@ function usePersisted<T>(key: string, initial: T) {
 }
 
 function Index() {
-  const current = isoWeek(new Date());
-  const [week, setWeek] = useState(current);
+  const today = new Date();
+  const current = dayKey(today);
+  const yesterday = dayKey(shiftDay(today, -1));
+  const [date, setDate] = useState(() => shiftDay(new Date(), 0));
+  const [calOpen, setCalOpen] = useState(false);
+  const day = dayKey(date);
+  const prevDay = dayKey(shiftDay(date, -1));
+  const taskDay = (t: Task) => t.day ?? current;
   const [tasks, setTasks] = usePersisted<Task[]>("office-tasks", [
-    { id: "1", text: "Presentation med Micheal", week: current, done: false },
-    { id: "2", text: "Möte med Jim", week: current, done: false },
-    { id: "3", text: "Maila Dwight", week: current, done: false },
-    { id: "4", text: "Ringa Pam", week: current, done: false },
-    { id: "5", text: "Ringa Angela", week: current, done: true },
-    { id: "6", text: "Maila Jim", week: current, done: true },
-    { id: "7", text: "Möte med Jim", week: current - 1, done: false },
-    { id: "8", text: "Boka konferensrum", week: current - 1, done: false },
+    { id: "1", text: "Presentation med Micheal", day: current, done: false },
+    { id: "2", text: "Möte med Jim", day: current, done: false },
+    { id: "3", text: "Maila Dwight", day: current, done: false },
+    { id: "4", text: "Ringa Pam", day: current, done: false },
+    { id: "5", text: "Ringa Angela", day: current, done: true },
+    { id: "6", text: "Maila Jim", day: current, done: true },
+    { id: "7", text: "Möte med Jim", day: yesterday, done: false },
+    { id: "8", text: "Boka konferensrum", day: yesterday, done: false },
   ]);
   const [notes, setNotes] = usePersisted<Note[]>("office-notes", [
     { id: "n1", text: "Remember to buy Milk for Coffe", color: 0 },
@@ -93,10 +99,10 @@ function Index() {
   const [sideOpen, setSideOpen] = useState(false);
   const [focusNote, setFocusNote] = useState<string | null>(null);
 
-  const weekTasks = tasks.filter((t) => t.week === week);
+  const weekTasks = tasks.filter((t) => taskDay(t) === day);
   const todo = weekTasks.filter((t) => !t.done);
   const done = weekTasks.filter((t) => t.done);
-  const lastWeek = tasks.filter((t) => t.week === week - 1 && !t.done);
+  const lastWeek = tasks.filter((t) => taskDay(t) === prevDay && !t.done);
   const pct = weekTasks.length ? (done.length / weekTasks.length) * 100 : 0;
 
   const toggle = (id: string) =>
@@ -104,7 +110,7 @@ function Index() {
   const remove = (id: string) => setTasks((ts) => ts.filter((t) => t.id !== id));
   const add = () => {
     if (!draft.trim()) return;
-    setTasks((ts) => [...ts, { id: uid(), text: draft.trim(), week, done: false }]);
+    setTasks((ts) => [...ts, { id: uid(), text: draft.trim(), day, done: false }]);
     setDraft("");
     setAdding(false);
   };
@@ -143,13 +149,30 @@ function Index() {
         <div className="relative flex flex-col items-start gap-3 pt-4 md:flex-row md:items-center">
           <h2 className="text-3xl">Hello {name}!</h2>
           <div className="flex items-center gap-6 bg-secondary px-3 py-3 md:absolute md:left-1/2 md:top-0 md:-translate-x-1/2">
-            <button aria-label="Previous week" onClick={() => setWeek((w) => w - 1)}>
+            <button aria-label="Previous day" onClick={() => setDate((d) => shiftDay(d, -1))}>
               <ChevronLeft />
             </button>
-            <span className="flex items-center gap-2 text-2xl">
-              Week {week} <CalendarDays className="h-5 w-5" />
-            </span>
-            <button aria-label="Next week" onClick={() => setWeek((w) => w + 1)}>
+            <Popover open={calOpen} onOpenChange={setCalOpen}>
+              <PopoverTrigger asChild>
+                <button aria-label="Choose day" className="flex items-center gap-2 text-2xl">
+                  {formatDay(date)} <CalendarDays className="h-5 w-5" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="center">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  defaultMonth={date}
+                  weekStartsOn={1}
+                  onSelect={(d) => {
+                    if (d) setDate(d);
+                    setCalOpen(false);
+                  }}
+                  className="pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
+            <button aria-label="Next day" onClick={() => setDate((d) => shiftDay(d, 1))}>
               <ChevronRight />
             </button>
           </div>
@@ -157,7 +180,7 @@ function Index() {
 
         <section className="mt-4 grid gap-3 md:grid-cols-2">
           <div className="flex flex-col bg-card p-6">
-            <h3 className="mb-6 text-center text-3xl">To Do This Week</h3>
+            <h3 className="mb-6 text-center text-3xl">To Do</h3>
             <div className="flex-1 space-y-3">
               {todo.length === 0 ? (
                 <div className="flex items-center justify-center gap-3 py-6">
@@ -246,7 +269,7 @@ function Index() {
                 />
                 <div className="flex-1">
                   <p className="text-3xl font-bold">Jims Side-Eye</p>
-                  <p className="text-lg text-muted-foreground">{lastWeek.length} Tasks from last week</p>
+                  <p className="text-lg text-muted-foreground">{lastWeek.length} Tasks from yesterday</p>
                 </div>
                 {sideOpen ? <ChevronUp /> : <ChevronDown />}
               </button>
