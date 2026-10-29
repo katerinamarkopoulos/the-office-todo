@@ -1,12 +1,11 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import type { ReactElement } from "react";
 
-import { Route } from "@/routes/index";
+import { TestOffice as Index } from "./office-fixture";
 
 // The route module keeps its component unexported so the router can code-split it,
 // so the test reaches it through the route's own options.
-const Index = Route.options.component as () => ReactElement;
+
 
 const dateLabel = () => screen.getByRole("button", { name: "Choose day" });
 
@@ -26,11 +25,11 @@ describe("Todays Office header", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Next day" }));
     fireEvent.click(screen.getByRole("button", { name: "Next day" }));
-    const otherDay = dateLabel().textContent!.trim();
+    const otherDay = dateLabel().textContent?.trim();
     expect(otherDay).not.toBe(today);
 
     fireEvent.click(screen.getByRole("button", { name: "Todays Office – go to today" }));
 
-    expect(dateLabel().textContent!.trim()).toBe(today);
+    expect(dateLabel().textContent?.trim()).toBe(today);
   });
 });

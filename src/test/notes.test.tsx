@@ -1,12 +1,11 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
-import type { ReactElement } from "react";
 
-import { Route } from "@/routes/index";
+import { TestOffice as Index } from "./office-fixture";
 
 // The route module keeps its component unexported so the router can code-split it,
 // so the test reaches it through the route's own options.
-const Index = Route.options.component as () => ReactElement;
+
 
 // The Notes grid seeds four post-its and persists to localStorage, so each case
 // must start from a clean storage or the previous case's writes leak into it.
