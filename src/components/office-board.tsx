@@ -55,7 +55,7 @@ const sideEyeLine = (n: number) =>
 
 
 
-export function OfficeBoard({ initialState, onChange, account }: { initialState: OfficeState; onChange?: (state: OfficeState) => void; account?: ReactNode }) {
+export function OfficeBoard({ initialState, onChange, account, name }: { initialState: OfficeState; onChange?: (state: OfficeState) => void; account?: ReactNode; name?: string }) {
   const today = new Date();
   const current = dayKey(today);
   const [date, setDate] = useState(() => shiftDay(new Date(), 0));
@@ -132,7 +132,7 @@ export function OfficeBoard({ initialState, onChange, account }: { initialState:
       <main className="px-4 md:px-6">
         {account}
         <div className="relative flex flex-col items-start gap-3 pt-4 md:flex-row md:items-center">
-          <h2 className="text-xl md:text-2xl">Hey you! Ready to pretend we have our lives together?</h2>
+          <h2 className="text-xl md:text-2xl">Hey {name?.trim() || "you"}! Ready to pretend we have our lives together?</h2>
           <div className="flex items-center gap-6 bg-secondary px-3 py-3 md:mx-auto">
             <button aria-label="Previous day" onClick={() => setDate((d) => shiftDay(d, -1))}>
               <ChevronLeft />
