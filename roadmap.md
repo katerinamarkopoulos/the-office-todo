@@ -1,5 +1,8 @@
 # Roadmap
 
+- [ ] Personal registration, name profile, sign-in/sign-out and private Cloud tasks/notes
+- [ ] Preset profile picture choices — waiting for Katerina's images
+
 - [x] Jim's Side-Eye panel: use uploaded Jim cutout
 - [x] "You're all set!" empty state + icon beside completed tasks: use uploaded Michael "yey" cutout
 - [x] Icon beside incomplete (not done) tasks: use uploaded Dunder Mifflin stapler-in-jello cutout instead of the paperclip
