@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { ReactNode } from 'react';
+import type { Task, Note, OfficeState } from '@/lib/office-data';
 import { useEffect, useRef, useState } from "react";
 import {
   CalendarDays,
@@ -22,23 +23,6 @@ import trophy from "@/assets/trophy.png";
 import jimSideEye from "@/assets/jim-sideeye.png.asset.json";
 import michaelYey from "@/assets/michael-yey.png.asset.json";
 import dundermifflin from "@/assets/dundermifflin.png.asset.json";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Todays Office – Weekly To-Do" },
-      { name: "description", content: "Plan your week Dunder-style: tasks, Dundies, notes and daily wisdom." },
-      { property: "og:title", content: "Todays Office – Weekly To-Do" },
-      { property: "og:description", content: "Plan your week Dunder-style: tasks, Dundies, notes and daily wisdom." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
-  component: Index,
-});
-
-type Task = { id: string; text: string; day?: string; week?: number; done: boolean };
-type Note = { id: string; text: string; color: number };
 
 const NOTE_STYLES = [
   "bg-note-gray text-foreground",
@@ -71,45 +55,21 @@ const sideEyeLine = (n: number) =>
 
 
 
-function usePersisted<T>(key: string, initial: T) {
-  const [val, setVal] = useState<T>(initial);
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    const raw = localStorage.getItem(key);
-    if (raw) setVal(JSON.parse(raw));
-    setReady(true);
-  }, [key]);
-  useEffect(() => {
-    if (ready) localStorage.setItem(key, JSON.stringify(val));
-  }, [key, val, ready]);
-  return [val, setVal] as const;
-}
-
-function Index() {
+export function OfficeBoard({ initialState, onChange, account }: { initialState: OfficeState; onChange?: (state: OfficeState) => void; account?: ReactNode }) {
   const today = new Date();
   const current = dayKey(today);
-  const yesterday = dayKey(shiftDay(today, -1));
   const [date, setDate] = useState(() => shiftDay(new Date(), 0));
   const [calOpen, setCalOpen] = useState(false);
   const day = dayKey(date);
   const prevDay = dayKey(shiftDay(date, -1));
   const taskDay = (t: Task) => t.day ?? current;
-  const [tasks, setTasks] = usePersisted<Task[]>("office-tasks", [
-    { id: "1", text: "Presentation med Micheal", day: current, done: false },
-    { id: "2", text: "Möte med Jim", day: current, done: false },
-    { id: "3", text: "Maila Dwight", day: current, done: false },
-    { id: "4", text: "Ringa Pam", day: current, done: false },
-    { id: "5", text: "Ringa Angela", day: current, done: true },
-    { id: "6", text: "Maila Jim", day: current, done: true },
-    { id: "7", text: "Möte med Jim", day: yesterday, done: false },
-    { id: "8", text: "Boka konferensrum", day: yesterday, done: false },
-  ]);
-  const [notes, setNotes] = usePersisted<Note[]>("office-notes", [
-    { id: "n1", text: "Remember to buy Milk for Coffe", color: 0 },
-    { id: "n2", text: "Bake cake for Pam's Birthday party at the office", color: 1 },
-    { id: "n3", text: "Do Michaels Marketing campaign for Dunkin Muffin", color: 2 },
-    { id: "n4", text: "Set Dwights stuff in jelly", color: 0 },
-  ]);
+  const [tasks, setTasks] = useState<Task[]>(initialState.tasks);
+  const [notes, setNotes] = useState<Note[]>(initialState.notes);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    onChange?.({ tasks, notes });
+  }, [tasks, notes, onChange]);
   const [adding, setAdding] = useState(false);
   const [draft, setDraft] = useState("");
   const [sideOpen, setSideOpen] = useState(false);
@@ -170,6 +130,7 @@ function Index() {
       </header>
 
       <main className="px-4 md:px-6">
+        {account}
         <div className="relative flex flex-col items-start gap-3 pt-4 md:flex-row md:items-center">
           <h2 className="text-xl md:text-2xl">Hey you! Ready to pretend we have our lives together?</h2>
           <div className="flex items-center gap-6 bg-secondary px-3 py-3 md:mx-auto">
