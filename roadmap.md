@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Verify email password reset and show/hide password in registration, sign-in and reset
+
 - [x] Personal registration, name profile, sign-in/sign-out and private Cloud tasks/notes
 - [x] Preset profile picture choices — six supplied images at registration and in profile
 
