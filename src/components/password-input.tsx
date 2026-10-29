@@ -7,7 +7,7 @@ export function PasswordInput(props: Omit<ComponentProps<typeof Input>, 'type'>)
   const [visible, setVisible] = useState(false);
   return <div className="relative">
     <Input {...props} type={visible ? 'text' : 'password'} className="pr-12"/>
-    <Button type="button" variant="ghost" size="icon" title={visible ? 'Hide password' : 'Show password'} aria-label={visible ? 'Hide password' : 'Show password'} aria-pressed={visible} onClick={() => setVisible(v => !v)} className="absolute right-0 top-0 h-9 w-10">
+    <Button type="button" variant="ghost" size="icon" title={visible ? 'Hide password' : 'Show password'} aria-label={visible ? 'Hide password' : 'Show password'} aria-pressed={visible} onClick={() => setVisible(v => !v)} className="absolute right-0 top-0 h-12 w-12">
       {visible ? <EyeOff /> : <Eye />}
     </Button>
   </div>;
