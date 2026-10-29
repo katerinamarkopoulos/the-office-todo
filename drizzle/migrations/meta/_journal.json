@@ -15,6 +15,13 @@
       "when": 1793277358235,
       "tag": "0001_secure_office_profile_trigger",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793277539557,
+      "tag": "0002_preset_profile_avatars",
+      "breakpoints": true
     }
   ]
 }

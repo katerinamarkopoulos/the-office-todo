@@ -6,6 +6,7 @@ import '@lovable.dev/cloud-auth-js/styles.css';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { profileName } from '@/lib/office-data';
+import { AvatarPicker } from '@/components/avatar-picker';
 import michael from '@/assets/michael-face.png.asset.json';
 import logo from '@/assets/office-logo.png.asset.json';
 
@@ -13,6 +14,7 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
   const navigate = useNavigate();
   const [mode, setMode] = useState<'signup' | 'signin' | 'forgot'>(startMode);
   const [name, setName] = useState('');
+  const [avatar, setAvatar] = useState<string | null>(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -32,7 +34,7 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
       } else if (mode === 'signup') {
         const parsed = profileName.safeParse(name);
         if (!parsed.success) throw new Error('Enter your name.');
-        const { data, error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: window.location.origin, data: { name: parsed.data } } });
+        const { data, error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: window.location.origin, data: { name: parsed.data, avatar_id: avatar } } });
         if (error) throw error;
         if (data.session) await navigate({ to: '/office' });
         else setMessage('Check your email to confirm your account, then sign in.');
@@ -63,6 +65,7 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
       <h2 className="text-3xl">{mode === 'signup' ? 'Your first day.' : mode === 'signin' ? 'Welcome back.' : 'Forgot your password?'}</h2>
       <form onSubmit={submit} className="mt-8 space-y-5">
         {mode === 'signup' && <label className="block space-y-2"><span>Your name</span><Input autoComplete="name" required maxLength={100} value={name} onChange={e => setName(e.target.value)}/></label>}
+        {mode === 'signup' && <AvatarPicker value={avatar} onChange={setAvatar}/>}
         <label className="block space-y-2"><span>Email</span><Input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)}/></label>
         {mode !== 'forgot' && <label className="block space-y-2"><span>Password</span><Input type="password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required minLength={8} value={password} onChange={e => setPassword(e.target.value)}/></label>}
         {message && <p role="status" className="text-sm break-words">{message}</p>}
