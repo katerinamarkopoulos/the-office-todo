@@ -14,7 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      office_state: {
+        Row: {
+          notes: Json
+          tasks: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          notes?: Json
+          tasks?: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          notes?: Json
+          tasks?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "office_state_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_id: string | null
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          avatar_id?: string | null
+          created_at?: string
+          id: string
+          name?: string
+        }
+        Update: {
+          avatar_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
