@@ -66,5 +66,5 @@ function Office() {
     </Dialog>
     <Button variant="ghost" size="icon" title="Sign out" aria-label="Sign out" disabled={busy} onClick={signOut}><LogOut /></Button>
   </div>;
-  return <OfficeBoard key={data.userId} initialState={data.state} onChange={persist} account={account}/>;
+  return <OfficeBoard key={data.userId} initialState={data.state} onChange={persist} account={account} name={data.profile.name}/>;
 }
