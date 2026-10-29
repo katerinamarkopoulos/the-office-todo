@@ -46,7 +46,15 @@ const NOTE_STYLES = [
   "bg-secondary text-secondary-foreground",
 ];
 
-const WISDOM = "You miss 100% of the shots you don't take.";
+const QUOTES = [
+  "You miss 100% of the shots you don't take.",
+  "I'm not superstitious, but I am a little stitious.",
+  "I'm an early bird and I'm a night owl. So I'm wise and I have worms.",
+  "Would I rather be feared or loved? Easy. Both.",
+  "Do I need to be liked? Absolutely not.",
+  "Guess what? I have flaws.",
+  "And I knew exactly what to do. But in a much more real sense, I had no idea what to do.",
+];
 
 const dayKey = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -307,7 +315,7 @@ function Index() {
               <p className="flex items-center gap-4">
                 <NotebookText className="h-5 w-5" /> Michaels daily wisdom
               </p>
-              <p className="mt-3 text-lg">“{WISDOM}”</p>
+              <p className="mt-3 text-lg">“{QUOTES[date.getDay()]}”</p>
               <p className="mt-6 text-xs">– Michael Scott</p>
             </div>
 
