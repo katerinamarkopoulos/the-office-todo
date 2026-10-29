@@ -8,6 +8,13 @@
       "when": 1793277169873,
       "tag": "0000_personal_office_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1793277358235,
+      "tag": "0001_secure_office_profile_trigger",
+      "breakpoints": true
     }
   ]
 }
