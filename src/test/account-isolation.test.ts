@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 
-const url = process.env.SUPABASE_URL;
-const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const url = process.env['SUPABASE_URL'];
+const key = process.env['SUPABASE_SERVICE_ROLE_KEY'];
 describe.skipIf(!url || !key)('Cloud account isolation', () => {
   it('keeps tasks and notes private and rejects writes to another account', async () => {
     if (!url || !key) throw new Error('Cloud test environment missing');
@@ -19,7 +19,10 @@ describe.skipIf(!url || !key)('Cloud account isolation', () => {
         expect(login.ok).toBe(true);
         tokens.push((await login.json()).access_token);
       }
-      const userHeaders = (token: string) => ({ apikey: key, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' });
+      const userHeaders = (token: string | undefined) => {
+        if (!token) throw new Error('Test session missing');
+        return { apikey: key, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+      };
       const state = { user_id: ids[0], tasks: [{ id: 'a', text: 'Private task', done: false }], notes: [{ id: 'n', text: 'Private note', color: 0 }] };
       const saved = await fetch(`${url}/rest/v1/office_state`, { method: 'POST', headers: userHeaders(tokens[0]), body: JSON.stringify(state) });
       expect(saved.ok).toBe(true);
