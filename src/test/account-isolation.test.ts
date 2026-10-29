@@ -12,7 +12,7 @@ describe.skipIf(!url || !key)('Cloud account isolation', () => {
       for (const name of ['Isolation A', 'Isolation B']) {
         const email = `isolation-${crypto.randomUUID()}@lovable.dev`;
         const password = `${crypto.randomUUID()}Aa!9`;
-        const created = await fetch(`${url}/auth/v1/admin/users`, { method: 'POST', headers: admin, body: JSON.stringify({ email, password, email_confirm: true, user_metadata: { name } }) });
+        const created = await fetch(`${url}/auth/v1/admin/users`, { method: 'POST', headers: admin, body: JSON.stringify({ email, password, email_confirm: true, user_metadata: { name, avatar_id: 'pam' } }) });
         expect(created.ok).toBe(true);
         ids.push((await created.json()).id);
         const login = await fetch(`${url}/auth/v1/token?grant_type=password`, { method: 'POST', headers: admin, body: JSON.stringify({ email, password }) });
@@ -24,6 +24,8 @@ describe.skipIf(!url || !key)('Cloud account isolation', () => {
         return { apikey: key, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
       };
       const state = { user_id: ids[0], tasks: [{ id: 'a', text: 'Private task', done: false }], notes: [{ id: 'n', text: 'Private note', color: 0 }] };
+      const profile = await fetch(`${url}/rest/v1/profiles?select=name,avatar_id`, { headers: userHeaders(tokens[0]) });
+      expect(await profile.json()).toEqual([{ name: 'Isolation A', avatar_id: 'pam' }]);
       const saved = await fetch(`${url}/rest/v1/office_state`, { method: 'POST', headers: userHeaders(tokens[0]), body: JSON.stringify(state) });
       expect(saved.ok).toBe(true);
       const ownerRead = await fetch(`${url}/rest/v1/office_state?select=tasks,notes`, { headers: userHeaders(tokens[0]) });

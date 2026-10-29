@@ -1,6 +1,12 @@
 import { z } from 'zod';
 import { queryOptions } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import pam from '@/assets/avatar-pam.png.asset.json';
+import dwight from '@/assets/avatar-dwight.png.asset.json';
+import dundie from '@/assets/avatar-dundie.png.asset.json';
+import jelly from '@/assets/avatar-jelly.png.asset.json';
+import jim from '@/assets/avatar-jim.png.asset.json';
+import michael from '@/assets/avatar-michael.png.asset.json';
 
 export const taskSchema = z.object({ id: z.string(), text: z.string(), day: z.string().optional(), week: z.number().optional(), done: z.boolean() });
 export const noteSchema = z.object({ id: z.string(), text: z.string(), color: z.number().int().min(0).max(2) });
@@ -9,7 +15,14 @@ export type OfficeState = z.infer<typeof officeSchema>;
 export type Task = z.infer<typeof taskSchema>;
 export type Note = z.infer<typeof noteSchema>;
 export const profileName = z.string().trim().min(1, 'Enter your name.').max(100);
-export const avatarChoices: { id: string; name: string; url: string }[] = [];
+export const avatarChoices = [
+  { id: 'pam', name: 'Pam', url: pam.url },
+  { id: 'dwight', name: 'Dwight', url: dwight.url },
+  { id: 'dundie', name: 'Dundie Award', url: dundie.url },
+  { id: 'jelly', name: 'Stapler in jelly', url: jelly.url },
+  { id: 'jim', name: 'Jim', url: jim.url },
+  { id: 'michael', name: 'Michael', url: michael.url },
+];
 
 export const officeQuery = queryOptions({
   queryKey: ['personal-office'],
