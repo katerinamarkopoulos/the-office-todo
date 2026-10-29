@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { profileName } from '@/lib/office-data';
 import { AvatarPicker } from '@/components/avatar-picker';
+import { PasswordInput } from '@/components/password-input';
 import michael from '@/assets/michael-face.png.asset.json';
 import logo from '@/assets/office-logo.png.asset.json';
 
@@ -67,7 +68,7 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
         {mode === 'signup' && <label className="block space-y-2"><span>Your name</span><Input autoComplete="name" required maxLength={100} value={name} onChange={e => setName(e.target.value)}/></label>}
         {mode === 'signup' && <AvatarPicker value={avatar} onChange={setAvatar}/>}
         <label className="block space-y-2"><span>Email</span><Input type="email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)}/></label>
-        {mode !== 'forgot' && <label className="block space-y-2"><span>Password</span><Input type="password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required minLength={8} value={password} onChange={e => setPassword(e.target.value)}/></label>}
+        {mode !== 'forgot' && <div className="space-y-2"><label htmlFor="account-password">Password</label><PasswordInput id="account-password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required minLength={8} value={password} onChange={e => setPassword(e.target.value)}/></div>}
         {message && <p role="status" className="text-sm break-words">{message}</p>}
         <Button disabled={busy} type="submit" className="w-full">{busy ? 'Please wait…' : mode === 'signup' ? 'Create account' : mode === 'signin' ? 'Sign in' : 'Send reset link'}</Button>
       </form>
@@ -77,7 +78,8 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
       </div>}
       <div className="mt-6 flex flex-wrap justify-center gap-2">
         <Button variant="link" onClick={() => { setMode(mode === 'signup' ? 'signin' : 'signup'); setMessage(''); }}>{mode === 'signup' ? 'Already have an account? Sign in' : 'Create an account'}</Button>
-        {mode === 'signin' && <Button variant="link" onClick={() => { setMode('forgot'); setMessage(''); }}>Forgot password?</Button>}
+        {mode !== 'forgot' && <Button variant="link" onClick={() => { setMode('forgot'); setMessage(''); }}>Forgot password?</Button>}
+        {mode === 'forgot' && <Button variant="link" onClick={() => { setMode('signin'); setMessage(''); }}>Back to sign in</Button>}
       </div>
     </main>
   </div>;

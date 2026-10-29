@@ -14,3 +14,4 @@
 - Keep the board as a presentation component with injected initial data and change callbacks, so UI tests stay independent of hosted authentication.
 - Serialize document saves and wait before sign-out, so rapid note edits cannot overwrite later changes.
 - Use the shared avatar picker at registration and in profile editing; store only a validated preset ID and render its CDN asset with object-contain to keep every supplied subject visible.
+- Use one shared password input for registration, sign-in and recovery so visibility toggling preserves the entered value without submitting the form.
