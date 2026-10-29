@@ -61,7 +61,7 @@ export function AuthScreen({ startMode = 'signup' }: { startMode?: 'signup' | 's
       <div className="flex items-center gap-3"><img src={michael.url} alt="Michael Scott" className="h-14 w-20 object-contain md:h-20 md:w-28"/><h1 className="text-2xl md:text-3xl">Todays Office</h1></div>
       <img src={logo.url} alt="The Office" className="h-12 w-auto md:h-16"/>
     </header>
-    <main className="mx-auto max-w-md px-6 py-10 md:py-16">
+    <main className="mx-auto max-w-lg px-6 py-10 md:py-16">
       <p className="mb-6 text-sm text-primary">DUNDER MIFFLIN</p>
       <h2 className="text-3xl">{mode === 'signup' ? 'Your first day.' : mode === 'signin' ? 'Welcome back.' : 'Forgot your password?'}</h2>
       <form onSubmit={submit} className="mt-8 space-y-5">
